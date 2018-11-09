@@ -3,7 +3,7 @@ import numpy as np
 from helpers import *
 from nltk import pos_tag
 from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer as wnl
 
 class CreateGraph(object):
     """
@@ -14,8 +14,9 @@ class CreateGraph(object):
     def __init__(self,data):
         self.data  = data
         self.wds   = [word_tokenize(sent.lower()) for sent in data]
-        self.lems  = [wnl().lemmatize(wd) for sent in self.wds for wd in sent]
-        self.pos   = [item[1] for sent in self.wds for item in pos_tag(sent)]
+        self.lems  = [[wnl().lemmatize(wd) for wd in sent] for sent in self.wds]
+        self.pos   = [[pos for (wd,pos) in pos_tag(sent)] for sent in self.wds]
+#        self.pos   = [item[1] for sent in self.wds for item in pos_tag(sent)]
         self.ctype = 'wd' #used for connection type; may be changed with connect_type
         self.graph = np.zeros((len(self.data),len(self.data)))
 
@@ -37,8 +38,8 @@ class CreateGraph(object):
         """
         Populate the empty graph with weights based on connection type
         """
-        for i, item1 in enumerate(self.graph):
-            for j, item2 in enumerate(self.graph):
+        for i in range(len(self.graph)):
+            for j in range(len(self.graph)):
                 if self.ctype == 'lem':
                     self.graph[i][j] = count_common_points(self.lems[i],self.lems[j])
                 elif self.ctype == 'wp':
