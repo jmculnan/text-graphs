@@ -15,7 +15,7 @@ def count_common_points(sent1,sent2):
     """
     Count number of identical items in two sentences
     """
-    i = 0
+    i = -1 #to counteract periods
     for item in sent1:
         if item in sent2:
             i += 1
