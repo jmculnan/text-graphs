@@ -29,3 +29,10 @@ def preprocess(data):
         processed.append(pairs)
     return processed
 """
+
+def count_common_points(sent1,sent2):
+    i = 0
+    for item in sent1:
+        if item in sent2:
+            i += 1
+    return i
