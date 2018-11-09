@@ -17,6 +17,7 @@ class CreateGraph(object):
         self.lems  = [wnl().lemmatize(wd) for sent in self.wds for wd in sent]
         self.pos   = [item[1] for sent in self.wds for item in pos_tag(sent)]
         self.ctype = 'wd' #used for connection type; may be changed with connect_type
+        self.graph = np.zeros((len(self.data),len(self.data)))
 
     def connect_type(self,opt):
         """
@@ -32,7 +33,28 @@ class CreateGraph(object):
         else:
             self.ctype = 'wd'
 
-    def exportToDOT(self)
+    def populate_graph(self):
+        """
+        Populate the empty graph with weights based on connection type
+        """
+        for i, item1 in enumerate(self.graph):
+            for j, item2 in enumerate(self.graph):
+                if self.ctype == 'lem':
+                    self.graph[i][j] = count_common_points(self.lems[i],self.lems[j])
+                elif self.ctype == 'wp':
+                    sent1 = list(zip(self.wds[i],self.pos[i]))
+                    sent2 = list(zip(self.wds[j],self.pos[j]))
+                    self.graph[i][j] = count_common_points(sent1, sent2)
+                elif self.ctype == 'lp':
+                    sent1 = list(zip(self.lems[i],self.pos[i]))
+                    sent2 = list(zip(self.lems[j],self.pos[j]))
+                    self.graph[i][j] = count_common_points(sent1, sent2)
+                else:
+                    self.graph[i][j] = count_common_points(self.wds[i],self.wds[j])
+
+
+    def exportToDOT(self):
+        pass
 
     def getNodeSentence(self, NodeIdx):
         """
@@ -45,19 +67,7 @@ class CreateGraph(object):
         """
         Calculate the number of items in common between two nodes
         """
-        if self.ctype == 'lem':
-            sent1 = self.lems[NodeIdx1]
-            sent2 = self.lems[NodeIdx2]
-        elif self.ctype == 'wp':
-            sent1 = list(zip(self.wds[NodeIdx1],self.pos[NodeIdx1]))
-            sent2 = list(zip(self.wds[NodeIdx2],self.pos[NodeIdx2]))
-        elif self.ctype == 'lp':
-            sent1 = list(zip(self.lems[NodeIdx1],self.pos[NodeIdx1]))
-            sent2 = list(zip(self.lems[NodeIdx2],self.pos[NodeIdx2]))
-        else:
-            sent1 = self.wds[NodeIdx1]
-            sent2 = self.wds[NodeIdx2]
-        return count_common_points(sent1,sent2)
+        return self.graph[NodeIdx1,NodeIdx2]
 
     def size(self):
         return len(self.data) ** 2 - len(self.data)
