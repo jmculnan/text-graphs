@@ -1,5 +1,6 @@
 
 import numpy as np
+from helpers import *
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem import WordNetLemmatizer
 
@@ -10,7 +11,5 @@ class CreateGraph(object):
     graph corresponding to the sentences in the input.
     """
     def __init__(self,data):
-        self.data   = data
+        self.data   = preprocess(data)
         self.sents  = sent_tokenize(sents)
-
-    
