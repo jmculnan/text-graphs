@@ -85,9 +85,12 @@ class CreateGraph(object):
         Calculate the number of items in common between two nodes
         """
         if self.graph[NodeIdx1][NodeIdx2] != 0:
-            return self.graph[NodeIdx1][NodeIdx2]
+            return self.graph[NodeIdx1][NodeIdx2] - 1 #remove period
+        elif self.graph[NodeIdx2][NodeIdx1] != 0:
+            return self.graph[NodeIdx2][NodeIdx1] - 1 #remove period
         else:
-            return self.graph[NodeIdx2][NodeIdx1]
+            return 0
+
 
     def size(self):
         return len(self.data)

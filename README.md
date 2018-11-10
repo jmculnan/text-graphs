@@ -15,3 +15,5 @@ class_graphs.py contains the class CreateGraph built-in functions for this class
 helpers.py contains functions to read input and count the number of items shared between two lists. These functions are used by instances of class CreateGraph.
 
 The Graphs directory contains .dot files containing subgraphs with a portion of the total nodes and .pdf files produced from those .dot files. Files are named after the connection type and number of nodes examined.
+
+Finally, Built-in_Output.html is an html file containing the output of a Jupyter Notebook demonstrating how the built-in functions in 4-6 above work.
