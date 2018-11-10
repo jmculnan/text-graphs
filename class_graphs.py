@@ -54,27 +54,30 @@ class CreateGraph(object):
                         self.graph[i][j] = count_common_points(self.wds[i],self.wds[j])
 
 
-    def exportToDOT(self,fname='my_graph.dot'):
+    def exportToDOT(self,fname='my_graph.dot', section_size = 10):
         """
         Export the graph to .dot file. This was way too large,
-        so I've been making adjustments that haven't quite
-        worked yet.
+        so I've allowed for the number of sentences selected
+        from the dataset to be altered. Sentences that have
+        no connections to any other within the subset are not
+        shown in the graph.
         """
         with open(fname,'w') as graphfile:
             graphfile.write('digraph D {\n\nnode [shape=record];\nedge [arrowhead=none];\n\n')
             for i, node in enumerate(self.data):
-                if i < 40:
+                if i < section_size:
                     opts = []
                     wgts = []
-                    for j in range(40):
+                    for j in range(section_size):
     #            for j in range(len(self.data)):
                         if self.graph[i][j] != 0 and i != j:
-    #                        graphfile.write('%s -> %s [penwidth=%d]' % (node, self.data[j], self.graph[i][j]))
-                            opts.append(self.data[j])
+                            graphfile.write('"%s" -> "%s" [penwidth=%d, label = "%d"]\n' % \
+                            (node, self.data[j], self.graph[i][j], self.graph[i][j]))
+    #                        opts.append(self.data[j])
         #                    wgts.append(self.graph[i][j])
-                    opts = ', '.join(opts.remove('.'))
+    #                opts = ', '.join(opts.remove('.'))
     #                graphfile.write('%d -> {%s}\n' % (i, opts) )
-                    graphfile.write('%s -> {%s}\n' % (node, opts) )
+    #                graphfile.write('%s -> {%s}\n' % (node, opts) )
             graphfile.write('\n}')
 
     def getNodeSentence(self, NodeIdx):
