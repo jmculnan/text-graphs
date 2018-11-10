@@ -53,7 +53,6 @@ class CreateGraph(object):
                     else:
                         self.graph[i][j] = count_common_points(self.wds[i],self.wds[j])
 
-
     def exportToDOT(self,fname='my_graph.dot', section_size = 10):
         """
         Export the graph to .dot file. This was way too large,
@@ -69,15 +68,9 @@ class CreateGraph(object):
                     opts = []
                     wgts = []
                     for j in range(section_size):
-    #            for j in range(len(self.data)):
                         if self.graph[i][j] != 0 and i != j:
                             graphfile.write('"%s" -> "%s" [penwidth=%d, label = "%d"]\n' % \
                             (node, self.data[j], self.graph[i][j], self.graph[i][j]))
-    #                        opts.append(self.data[j])
-        #                    wgts.append(self.graph[i][j])
-    #                opts = ', '.join(opts.remove('.'))
-    #                graphfile.write('%d -> {%s}\n' % (i, opts) )
-    #                graphfile.write('%s -> {%s}\n' % (node, opts) )
             graphfile.write('\n}')
 
     def getNodeSentence(self, NodeIdx):
@@ -91,7 +84,10 @@ class CreateGraph(object):
         """
         Calculate the number of items in common between two nodes
         """
-        return self.graph[NodeIdx1][NodeIdx2]
+        if self.graph[NodeIdx1][NodeIdx2] != 0:
+            return self.graph[NodeIdx1][NodeIdx2]
+        else:
+            return self.graph[NodeIdx2][NodeIdx1]
 
     def size(self):
         return len(self.data)
@@ -99,7 +95,7 @@ class CreateGraph(object):
     def findShortestPaths(NodeIdx1, NodeIdx2):
         """
         Find the shortest path between any two nodes.
-        Do a breadth-first search
+        Do a breadth-first search. Not complete
         """
         pointers = []
         point = NodeIdx1

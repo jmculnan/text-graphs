@@ -1,0 +1,25 @@
+digraph D {
+
+node [shape=record];
+edge [arrowhead=none];
+
+"Break down means to change a whole into pieces." -> "Winter is a kind of season." [penwidth=1, label = "1"]
+"Break down means to change a whole into pieces." -> "Heating means adding heat." [penwidth=1, label = "1"]
+"Break down means to change a whole into pieces." -> "Water is a kind of liquid." [penwidth=1, label = "1"]
+"Break down means to change a whole into pieces." -> "A rock is a hard substance composed of minerals." [penwidth=1, label = "1"]
+"Break down means to change a whole into pieces." -> "Protecting something means preventing harm." [penwidth=1, label = "1"]
+"Break down means to change a whole into pieces." -> "Evaporation is when a liquid changes to a gas." [penwidth=2, label = "2"]
+"Break down means to change a whole into pieces." -> "An animal is a kind of organism." [penwidth=1, label = "1"]
+"Winter is a kind of season." -> "Water is a kind of liquid." [penwidth=4, label = "4"]
+"Winter is a kind of season." -> "A rock is a hard substance composed of minerals." [penwidth=3, label = "3"]
+"Winter is a kind of season." -> "Evaporation is when a liquid changes to a gas." [penwidth=2, label = "2"]
+"Winter is a kind of season." -> "An animal is a kind of organism." [penwidth=4, label = "4"]
+"Heating means adding heat." -> "Protecting something means preventing harm." [penwidth=1, label = "1"]
+"Water is a kind of liquid." -> "A rock is a hard substance composed of minerals." [penwidth=3, label = "3"]
+"Water is a kind of liquid." -> "Evaporation is when a liquid changes to a gas." [penwidth=3, label = "3"]
+"Water is a kind of liquid." -> "An animal is a kind of organism." [penwidth=4, label = "4"]
+"A rock is a hard substance composed of minerals." -> "Evaporation is when a liquid changes to a gas." [penwidth=3, label = "3"]
+"A rock is a hard substance composed of minerals." -> "An animal is a kind of organism." [penwidth=4, label = "4"]
+"Evaporation is when a liquid changes to a gas." -> "An animal is a kind of organism." [penwidth=3, label = "3"]
+
+}
